@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'header.html' %}
+
+<body>
+   <!-- Header: Menu and Home -->
+   <div class="container">
+      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+          <span class="fs-4 text-black" style="font-family: Georgia, 'Times New Roman', Times, serif; color:hotpink;">OPTIMISTIC INVENTORY</span>
+        </a>
+  
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a href="/index" class="nav-link text-black" aria-current="page" style="font-family: Georgia, 'Times New Roman', Times, serif;">All Inventory</a></li>
+          <li class="nav-item" ><a href="#" class="nav-link text-black" id="availItemsButton" style="font-family: Georgia, 'Times New Roman', Times, serif;">Available Inventory</a></li>
+          <li class="nav-item" ><a href="#" class="nav-link text-black" id="soldItemsButton" style="font-family: Georgia, 'Times New Roman', Times, serif;">Sold Out Inventory</a></li>
+        </ul>
+      </header>
+   </div>
+
+   <!-- Main Contents: Heading, search bar, matching items, add item functionality -->
+   <div class="container">
+      <div class="p-3 pb-md-4 mx-auto text-center">
+         <h1 id="titleDiv" class="display-4 fw-normal text-black" style="font-family: Georgia, 'Times New Roman', Times, serif;"></h1>
+      </div>
+
+      <div class="">
+         <input class="form-control mb-3" id="itemTitleInput" placeholder="Search">
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4" id="resultsDiv"></div>
+
+      <div class="justify-content-md-between mt-auto">
+         <button type="button" class="btn btn-lg text-black" data-bs-toggle="modal" data-bs-target="#newItemModal">
+            <i class="fa fa-plus text-black"></i> Add Item
+         </button>
+      </div>
+
+      {% include 'modal.html' %}
+   </div>
+
+   <br>
+   <br>
+   <br>
+
+   <div>
+   {% include 'footer.html' %}
+   </div>
+
+   <!-- Bootstrap JS -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous">
+   </script>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+   <script>
+      let request = null;
+
+      function handleResponse(response) {
+         $('#resultsDiv').html(response);
+      }
+
+      function filterResults() {
+         let itemTitle = $('#itemTitleInput').val();
+         if (itemTitle == '') {
+            $('#titleDiv').html("All Items");
+         } else {
+            $('#titleDiv').html("Search");
+         }
+          
+         console.log('filter')
+         let cards = $("#resultsDiv").find("div.col");
+         
+         getResults()  
+      }
+
+      function getResults() {
+
+         let itemTitle = $('#itemTitleInput').val();
+         itemTitle = encodeURIComponent(itemTitle);
+         let url = '/search?q=' + itemTitle
+
+         if (request != null)
+            request.abort();
+
+         request = $.ajax({
+            type: 'GET',
+            url: url,
+            success: handleResponse
+         });
+      }
+
+      function setup() {
+         $('#titleDiv').html("All Items");
+
+         getResults()
+
+         $('#itemTitleInput').on('input', filterResults);
+
+         $('#availItemsButton').click(function () {
+            console.log('Available items clicked')
+            $('#titleDiv').html('Available Items')
+            let cards = $("#resultsDiv").find("div.col");
+            cards.hide()
+            console.log(cards)
+            cards.filter(":contains('available')").show();
+
+         });
+
+         $('#soldItemsButton').click(function () {
+            console.log('Sold items clicked')
+            $('#titleDiv').html('Sold Out Items')
+            let cards = $("#resultsDiv").find("div.col");
+            cards.hide()
+            console.log(cards)
+            cards.filter(":contains('sold')").show();
+
+         });
+
+      }
+
+      $('document').ready(setup);
+   </script>
+
+</body>
+
+
+</html>

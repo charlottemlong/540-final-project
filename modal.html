@@ -1,0 +1,43 @@
+<div class="modal fade" id="newItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="newItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newItemModalLabel">Add New Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="add_item" method="post" id="entries">
+                    <div class="mb-3">
+                        <label for="item_name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="item_name" name="item_name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="item_id" class="form-label">Item ID</label>
+                        <input type="number" class="form-control" id="item_id" name="item_id">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" id="color" name="color">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="length" class="form-label">Length</label>
+                        <input type="number" class="form-control" id="length" name="length">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fabric" class="form-label">Fabric</label>
+                        <input type="text" class="form-control" id="fabric" name="fabric">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" form="entries" class="btn btn-primary" value="Add">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

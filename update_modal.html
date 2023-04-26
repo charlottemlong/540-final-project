@@ -1,0 +1,29 @@
+<div class="modal fade" id="updateItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="updateItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateItemModalLabel">Update Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/updateitem/{{item.item_name}}/{{item.item_id}}" method="post" id="entries">
+
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" id="color" name="color" value="{{item.Color}}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sold_out" class="form-label">Sold Out</label>
+                        <input type="text" class="form-control" id="sold_out" name="sold_out" value="{{item.Sold_Out}}">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" form="entries" class="btn btn-primary" value="Update">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
